@@ -222,3 +222,49 @@ print("vehicle shape:", snap["agent"]["shape"][a, builder.history_samples])
 if "static_objects" in snap:
     print("cone:", snap["static_objects"]["position"][0], snap["static_objects"]["category"][0])
 ```
+
+```python
+ agent                                       
+   position                                  (1, 3, 101, 2)          float32
+   heading                                   (1, 3, 101)             float32
+   velocity                                  (1, 3, 101, 2)          float32
+   shape                                     (1, 3, 101, 2)          float32
+   category                                  (1, 3)                  int8
+   valid_mask                                (1, 3, 101)             bool
+   turn_signals                              (1, 3, 101)             int8
+   target                                    (1, 3, 80, 3)           float32
+ map                                         
+   point_position                            (1, 110, 3, 20, 2)      float32
+   point_vector                              (1, 110, 3, 20, 2)      float32
+   point_orientation                         (1, 110, 3, 20)         float32
+   point_side                                (1, 110, 3)             int8
+   polygon_center                            (1, 110, 3)             float32
+   polygon_position                          (1, 110, 2)             float32
+   polygon_orientation                       (1, 110)                float32
+   polygon_type                              (1, 110)                int8
+   polygon_on_route                          (1, 110)                bool
+   polygon_tl_status                         (1, 110, 21)            int8
+   polygon_has_speed_limit                   (1, 110)                bool
+   polygon_speed_limit                       (1, 110)                float32
+   polygon_road_block_id                     (1, 110)                int32
+   border_type                               (1, 110, 20, 2)         int8
+   access_type                               (1, 110)                int8
+   valid_mask                                (1, 110, 20)            bool
+ reference_line                              
+   position                                  (1, 1, 120, 2)          float32
+   vector                                    (1, 1, 120, 2)          float32
+   orientation                               (1, 1, 120)             float32
+   valid_mask                                (1, 1, 120)             bool
+   future_projection                         (1, 1, 8, 2)            float32
+ current_state                               (1, 7)                  float32
+ origin                                      (1, 2)                  float32
+ angle                                       (1,)                    float32
+ cost_maps                                   (1, 600, 600, 1)        float16
+ obstacle                                    
+   point_position                            (1, 3, 4, 2)            float32
+   point_vector                              (1, 3, 4, 2)            float32
+   point_orientation                         (1, 3, 4)               float32
+   point_valid_mask                          (1, 3, 4)               bool
+   polygon_center                            (1, 3, 3)               float32
+   polygon_type                              (1, 3)                  int8
+```
