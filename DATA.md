@@ -268,3 +268,12 @@ if "static_objects" in snap:
    polygon_center                            (1, 3, 3)               float32
    polygon_type                              (1, 3)                  int8
 ```
+
+## Batching:
+```python
+sample @ iter 0: agents=3, map polygons=110, ref_lines=1
+sample @ iter 5: agents=3, map polygons=110, ref_lines=1
+batched shapes: agent.position (2, 3, 101, 2), map.point_position (2, 110, 3, 20, 2)
+  -> batch dim B=2; agent axis max_A=3, map axis max_M=110
+Padding: extra agent/map slots are zeros; encoder key_padding_mask marks them ignored.
+```
