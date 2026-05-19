@@ -288,3 +288,38 @@ Padding: extra agent/map slots are zeros; encoder key_padding_mask marks them ig
 Fused sequence: `x = cat([x_agent, x_map, x_obs]) + Embedding(x,y,θ)` then stacked **`TransformerEncoderLayer`** blocks with shared **`key_padding_mask`**.
 
 **`reference_line`** is **not** in the scene encoder — it is consumed later by **`PlanningDecoder`** (cross-attention to `enc_out`).
+
+## Head
+```python
+reference_line tokens R > 0: True
+score_prob shape: (1, 1, 4)
+trajectory (raw head): (1, 1, 4, 80, 6)
+probability logits: (1, 1, 4)
+action_trajectory_dict keys: ['acceleration', 'curvature']
+  acceleration (1, 1, 4, 80)
+  curvature (1, 1, 4, 80)
+
+
+ trajectory                                  (1, 4, 80, 6)           float32
+ probability                                 (1, 4)                  float32
+ augmented_probability                       (1, 4)                  float32
+ prediction                                  (2, 80, 6)              float32
+ action_trajectory_dict                      
+   acceleration                              (1, 4, 80)              float32
+   curvature                                 (1, 4, 80)              float32
+ score_prob                                  (1, 4)                  float32
+ pre_safety_best_traj_idx                    ()                      int64
+ post_safety_best_traj_idx                   ()                      int64
+ ref_free_trajectory                         (80, 4)                 float32
+ output_ref_free_trajectory                  (80, 3)                 float32
+ output_prediction                           (2, 80, 5)              float32
+ encoder_attn_weights                        (116, 116)              float32
+ no_safe_candidate_by_score                  ()                      int64
+ output_trajectory                           (80, 5)                 float32
+ output_action_trajectory_dict               
+   acceleration                              (80,)                   float32
+   curvature                                 (80,)                   float32
+ candidate_trajectories                      (1, 4, 80, 5)           float32
+output_trajectory T x D: (80, 5) (D=3 or 5 with velocity)
+
+```
