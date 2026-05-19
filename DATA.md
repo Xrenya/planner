@@ -277,3 +277,14 @@ batched shapes: agent.position (2, 3, 101, 2), map.point_position (2, 110, 3, 20
   -> batch dim B=2; agent axis max_A=3, map axis max_M=110
 Padding: extra agent/map slots are zeros; encoder key_padding_mask marks them ignored.
 ```
+### 7a — What each encoder submodule does
+
+| Submodule | Input highlights | Output token |
+|-----------|------------------|--------------|
+| **`AgentEncoder`** | History of Δposition, Δvelocity, heading sin/cos per valid step; ego may use last `current_state` only | `(B, A, dim)` |
+| **`MapEncoder`** | Per polygon: 20 points × 3 edges → `PointsEncoder`; + type, on-route, TL history, speed limit | `(B, M, dim)` |
+| **`ObstaclesEncoder`** | PCD polylines relative to `polygon_center` | `(B, M_obs, dim)` |
+
+Fused sequence: `x = cat([x_agent, x_map, x_obs]) + Embedding(x,y,θ)` then stacked **`TransformerEncoderLayer`** blocks with shared **`key_padding_mask`**.
+
+**`reference_line`** is **not** in the scene encoder — it is consumed later by **`PlanningDecoder`** (cross-attention to `enc_out`).
